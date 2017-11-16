@@ -60,6 +60,7 @@ class Data_loader():
                     feature_list.append(feature)
                     label_list.append(label.sale_amt_3m.tolist()[0])
                     print(str(len(label_list))+'/'+str(len(months)*len(all_shop)))
+        
         pkl.dump(feature_list,open('feature_list.pkl','wb'))
         pkl.dump(label_list,open('label_list.pkl','wb'))
 
