@@ -60,6 +60,7 @@ class Data_loader():
                     feature_list.append(feature)
                     label_list.append(label.sale_amt_3m.tolist()[0])
                     print(str(len(label_list))+'/'+str(len(months)*len(all_shop)))
+        assert len(feature_list)==len(label_list)
         
         pkl.dump(feature_list,open('feature_list.pkl','wb'))
         pkl.dump(label_list,open('label_list.pkl','wb'))
@@ -81,7 +82,6 @@ class Data_loader():
             
             print(str(len(forecast_feature_list))+'/'+str(len(all_forecast_shop)))
         
-        assert len(feature_list)==len(all_forecast_shop)
         pkl.dump(forecast_feature_list,open('forecast_feature_list.pkl','wb'))
         pkl.dump(forecast_shop_list,open('forecast_shop_list.pkl','wb'))
 
