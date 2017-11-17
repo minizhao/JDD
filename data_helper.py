@@ -73,14 +73,14 @@ class Data_loader():
         for shop_id in all_forecast_shop:
             self.shop_id=shop_id
             self.month='2017-04'
-            
+      
             feature = np.concatenate((dl.conver_comment(df_comment), dl.conver_ads(df_ads),\
                                       dl.conver_order(df_order), dl.conver_product(df_product)))
                 
             forecast_feature_list.append(feature)
             forecast_shop_list.append(shop_id)
             
-            print(str(len(forecast_feature_list))+'/'+str(len(all_forecast_shop)))
+            # print(str(len(forecast_feature_list))+'/'+str(len(all_forecast_shop)))
         
         pkl.dump(forecast_feature_list,open('forecast_feature_list.pkl','wb'))
         pkl.dump(forecast_shop_list,open('forecast_shop_list.pkl','wb'))
