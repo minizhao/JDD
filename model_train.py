@@ -25,7 +25,7 @@ def my_custom_loss_func(ground_truth, predictions):
 def find_best_parameters():
 	score = make_scorer(my_custom_loss_func, greater_is_better=False)
 	clf=Pipeline([('ss',StandardScaler()),('GBR',GradientBoostingRegressor())])
-	parameters={'GBR__learning_rate':[0.1],'GBR__n_estimators':list((range(20,301,30))),'GBR__max_depth':[4]}
+	parameters={'GBR__learning_rate':[0.1,0.12,0.13,0.14,0.15],'GBR__n_estimators':list((range(20,301,30))),'GBR__max_depth':list(range(3,9))}
 
 	gs=GridSearchCV(clf,parameters,verbose=2,refit=True,cv=5,scoring=score)
 	gs.fit(feature_all,lable_all)
