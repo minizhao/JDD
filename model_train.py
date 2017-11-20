@@ -11,8 +11,8 @@ from sklearn.metrics import  make_scorer
 
 feature_all = pkl.load(open('feature_list.pkl','rb'))
 feature_all = np.array(feature_all)
-feature_all=np.nan_to_num(feature_all)
-
+# feature_all=np.nan_to_num(feature_all)
+feature_all[np.isnan(feature_all)]=0
 lable_all = pkl.load(open('label_list.pkl','rb'))
 
 def my_custom_loss_func(ground_truth, predictions):
@@ -48,17 +48,23 @@ def test_result():
 def save_data():
 	forecast_feature_list = pkl.load(open('forecast_feature_list.pkl','rb'))
 	forecast_feature = np.array(forecast_feature_list)
-	forecast_feature=np.nan_to_num(forecast_feature)
+	forecast_feature[np.isnan(forecast_feature)]=0
 	forecast_shop_list = pkl.load(open('forecast_shop_list.pkl','rb'))
 
-	GBR = GradientBoostingRegressor(learning_rate=0.1,n_estimators=300,max_depth=4)
-	GBR.fit(feature_all,lable_all)
 	ss = StandardScaler()
-	forecast_feature_ss = ss.fit_transform(forecast_feature)
+	feature_ss = ss.fit_transform(feature_all)
+	forecast_feature_ss = ss.transform(forecast_feature)
+
+	X_train,X_test,y_train,y_test = train_test_split(feature_ss,lable_all,\
+	test_size=0.05,random_state=0)
+
+	GBR = GradientBoostingRegressor(learning_rate=0.1,n_estimators=300,max_depth=4)
+	GBR.fit(X_train,y_train)
+	
 	forecast_pred = GBR.predict(forecast_feature_ss)
 	ans = pd.DataFrame(forecast_pred,forecast_shop_list)
-	ans.to_csv('ans.csv')
+	ans.to_csv('ans.csv',header=False)
 	print('done')
 
 if __name__ == '__main__':
-	find_best_parameters()
+	save_data()
