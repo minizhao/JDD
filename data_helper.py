@@ -52,8 +52,8 @@ class Data_loader():
 
     def create_train_data(self):
 
-        feature_list=[0,0,0]
-        label_list=[0,0,0]
+        feature_list=[]
+        label_list=[]
         all_shop=self.df_ads.shop_id.drop_duplicates()
         months=list(set([x[:7] for x in self.df_ads.create_dt.drop_duplicates()]))#提取月份
         months.sort()
